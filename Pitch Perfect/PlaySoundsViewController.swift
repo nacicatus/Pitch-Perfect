@@ -50,10 +50,9 @@ class PlaySoundsViewController: UIViewController {
         
         // create a random slow rate
         var slowRate: Float = randomBetweenNumbers(0.0, secondNum: 1.0)
-
+        println(slowRate)
         // Set the rate for slow playback
         audioPlayer.rate = slowRate
-        
         audioPlayer.play()
     }
 
@@ -65,6 +64,7 @@ class PlaySoundsViewController: UIViewController {
         
         // create a random fast rate
         var fastRate = randomBetweenNumbers(1.0, secondNum: 2.0)
+        println(fastRate)
         // Set the rate for fast playback
         audioPlayer.rate = fastRate
         audioPlayer.play()
@@ -79,12 +79,14 @@ class PlaySoundsViewController: UIViewController {
     @IBAction func playChipmunkAudio(sender: UIButton) {
         //Chipmunk effect
         var pitchMunk = randomBetweenNumbers(1.0, secondNum: 2400)
+        println(pitchMunk)
         playAudioWithVariablePitch(pitchMunk) // Set a pitch value
     }
     
     @IBAction func playDarthAudio(sender: UIButton) {
         // Darth Vader Effect
         var pitchVader = randomBetweenNumbers(-2400, secondNum: 1.0)
+        println(pitchVader)
         playAudioWithVariablePitch(pitchVader) // Set a pitch value
     }
     
@@ -92,12 +94,15 @@ class PlaySoundsViewController: UIViewController {
         // Randomize a wetDryMix value, and a delay value
         var wDM = randomBetweenNumbers(0, secondNum: 100)
         var dT = randomTimeInterval(0.0, secondNum: 2.0)
+        println(wDM)
+        println(dT)
         playEchoAudio(wDM, delay: dT)
     }
     
     @IBAction func reverbAudio(sender: UIButton) {
         // Randomize a wetDryMix value
         var wDM2 = randomBetweenNumbers(0, secondNum: 100)
+        println(wDM2)
         playReverbAudio(wDM2)
     }
     
