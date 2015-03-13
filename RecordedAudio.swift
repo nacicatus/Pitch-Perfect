@@ -9,9 +9,12 @@
 import Foundation
 
 class RecordedAudio: NSObject {
-    var filePathUrl: NSURL!
-    var title: String!
+    // create 2 variables. We don't need to set them as optionals because we're
+    // going to initialize them below
+    var filePathUrl: NSURL
+    var title: String
     
+    // initialize variables using a constructor
     init(filePathUrl: NSURL, title: String) {
         self.filePathUrl = filePathUrl
         self.title = title
