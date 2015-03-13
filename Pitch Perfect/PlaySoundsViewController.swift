@@ -27,6 +27,16 @@ class PlaySoundsViewController: UIViewController {
         audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl, error: nil)
     }
 
+    // Create a random float generator between a range of values
+    // http://stackoverflow.com/questions/26029393/random-number-between-two-decimals-in-swift
+    func randomBetweenNumbers(firstNum: Float, secondNum: Float) -> Float{
+        return Float(arc4random()) / Float(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
+    }
+    
+    func randomTimeInterval(firstNum: NSTimeInterval, secondNum: NSTimeInterval) -> NSTimeInterval{
+    return NSTimeInterval(arc4random()) / NSTimeInterval(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -37,8 +47,12 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer.stop()
         audioEngine.stop()
         audioEngine.reset()
+        
+        // create a random slow rate
+        var slowRate: Float = randomBetweenNumbers(0.0, secondNum: 1.0)
+
         // Set the rate for slow playback
-        audioPlayer.rate = 0.5
+        audioPlayer.rate = slowRate
         
         audioPlayer.play()
     }
@@ -48,8 +62,11 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer.stop()
         audioEngine.stop()
         audioEngine.reset()
+        
+        // create a random fast rate
+        var fastRate = randomBetweenNumbers(1.0, secondNum: 2.0)
         // Set the rate for fast playback
-        audioPlayer.rate = 1.5
+        audioPlayer.rate = fastRate
         audioPlayer.play()
     }
     
@@ -61,20 +78,27 @@ class PlaySoundsViewController: UIViewController {
     
     @IBAction func playChipmunkAudio(sender: UIButton) {
         //Chipmunk effect
-        playAudioWithVariablePitch(1000) // Set a pitch value
+        var pitchMunk = randomBetweenNumbers(1.0, secondNum: 2400)
+        playAudioWithVariablePitch(pitchMunk) // Set a pitch value
     }
     
     @IBAction func playDarthAudio(sender: UIButton) {
         // Darth Vader Effect
-        playAudioWithVariablePitch(-700) // Set a pitch value
+        var pitchVader = randomBetweenNumbers(-2400, secondNum: 1.0)
+        playAudioWithVariablePitch(pitchVader) // Set a pitch value
     }
     
     @IBAction func echoAudio(sender: UIButton) {
-        playEchoAudio(40, delay: 0.2) // Set a wetDryMix value, and a delay value
+        // Randomize a wetDryMix value, and a delay value
+        var wDM = randomBetweenNumbers(0, secondNum: 100)
+        var dT = randomTimeInterval(0.0, secondNum: 2.0)
+        playEchoAudio(wDM, delay: dT)
     }
     
     @IBAction func reverbAudio(sender: UIButton) {
-        playReverbAudio(70.0) // Set a wetDryMix value
+        // Randomize a wetDryMix value
+        var wDM2 = randomBetweenNumbers(0, secondNum: 100)
+        playReverbAudio(wDM2)
     }
     
     func playAudioWithVariablePitch(pitch: Float) {
