@@ -42,29 +42,70 @@
                                 <color key="textColor" red="0.0" green="0.25098040699958801" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKJ-OR-PVU">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="pauseButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pauseRecording:" destination="vXZ-lx-hvc" eventType="touchDown" id="sEM-3f-OWn"/>
+                                    <action selector="resumeRecording:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Qcd-Hr-gcD"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold to Pause" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N31-pv-8zG">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play Sound FX" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jwn-md-jaX">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.40000000596046448" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="CgG-oG-rX1" firstAttribute="top" secondItem="eWY-Sk-Hze" secondAttribute="bottom" constant="18" id="6kf-Ud-jpE"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="WGo-TC-JLa" secondAttribute="bottom" constant="86" id="Gz2-F6-7s3"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="N31-pv-8zG" secondAttribute="bottom" constant="61" id="TE7-A8-QCp"/>
                             <constraint firstAttribute="centerX" secondItem="eWY-Sk-Hze" secondAttribute="centerX" id="U72-pe-5bd"/>
+                            <constraint firstItem="N31-pv-8zG" firstAttribute="top" secondItem="dKJ-OR-PVU" secondAttribute="bottom" constant="11" id="VRJ-33-Qit"/>
                             <constraint firstAttribute="centerY" secondItem="eWY-Sk-Hze" secondAttribute="centerY" id="WWy-32-DZj"/>
-                            <constraint firstAttribute="centerX" secondItem="WGo-TC-JLa" secondAttribute="centerX" constant="-2" id="fpd-8x-YEi"/>
+                            <constraint firstItem="jwn-md-jaX" firstAttribute="top" secondItem="WGo-TC-JLa" secondAttribute="bottom" constant="11" id="Yql-Pi-tvc"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="jwn-md-jaX" secondAttribute="bottom" constant="61" id="hpf-7K-qmw"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="dKJ-OR-PVU" secondAttribute="bottom" constant="90" id="jDJ-by-iX2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jwn-md-jaX" secondAttribute="trailing" constant="17" id="nOX-Kp-6zk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WGo-TC-JLa" secondAttribute="trailing" constant="40" id="pGY-33-6Gm"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="WGo-TC-JLa" secondAttribute="bottom" constant="90" id="rR0-WD-Qox"/>
+                            <constraint firstItem="dKJ-OR-PVU" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="40" id="sct-Sa-gEi"/>
                             <constraint firstAttribute="centerX" secondItem="CgG-oG-rX1" secondAttribute="centerX" id="x8a-i8-Z6j"/>
+                            <constraint firstItem="N31-pv-8zG" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="17" id="yzF-Xc-kAF"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="eWY-Sk-Hze"/>
                                 <exclude reference="WGo-TC-JLa"/>
                                 <exclude reference="CgG-oG-rX1"/>
+                                <exclude reference="dKJ-OR-PVU"/>
+                                <exclude reference="N31-pv-8zG"/>
+                                <exclude reference="jwn-md-jaX"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Gz2-F6-7s3"/>
-                                <exclude reference="6kf-Ud-jpE"/>
-                                <exclude reference="x8a-i8-Z6j"/>
-                                <exclude reference="fpd-8x-YEi"/>
                                 <exclude reference="U72-pe-5bd"/>
                                 <exclude reference="WWy-32-DZj"/>
+                                <exclude reference="6kf-Ud-jpE"/>
+                                <exclude reference="x8a-i8-Z6j"/>
+                                <exclude reference="sct-Sa-gEi"/>
+                                <exclude reference="VRJ-33-Qit"/>
+                                <exclude reference="yzF-Xc-kAF"/>
+                                <exclude reference="pGY-33-6Gm"/>
+                                <exclude reference="Yql-Pi-tvc"/>
+                                <exclude reference="nOX-Kp-6zk"/>
+                                <exclude reference="TE7-A8-QCp"/>
+                                <exclude reference="hpf-7K-qmw"/>
+                                <exclude reference="jDJ-by-iX2"/>
+                                <exclude reference="rR0-WD-Qox"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -72,22 +113,36 @@
                                 <include reference="eWY-Sk-Hze"/>
                                 <include reference="WGo-TC-JLa"/>
                                 <include reference="CgG-oG-rX1"/>
+                                <include reference="dKJ-OR-PVU"/>
+                                <include reference="N31-pv-8zG"/>
+                                <include reference="jwn-md-jaX"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Gz2-F6-7s3"/>
-                                <include reference="6kf-Ud-jpE"/>
-                                <include reference="x8a-i8-Z6j"/>
-                                <include reference="fpd-8x-YEi"/>
                                 <include reference="U72-pe-5bd"/>
                                 <include reference="WWy-32-DZj"/>
+                                <include reference="6kf-Ud-jpE"/>
+                                <include reference="x8a-i8-Z6j"/>
+                                <include reference="sct-Sa-gEi"/>
+                                <include reference="VRJ-33-Qit"/>
+                                <include reference="yzF-Xc-kAF"/>
+                                <include reference="pGY-33-6Gm"/>
+                                <include reference="Yql-Pi-tvc"/>
+                                <include reference="nOX-Kp-6zk"/>
+                                <include reference="TE7-A8-QCp"/>
+                                <include reference="hpf-7K-qmw"/>
+                                <include reference="jDJ-by-iX2"/>
+                                <include reference="rR0-WD-Qox"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Record" id="vmh-ku-a9M"/>
                     <connections>
+                        <outlet property="pauseButton" destination="dKJ-OR-PVU" id="6vd-db-OXk"/>
+                        <outlet property="pauseLabel" destination="N31-pv-8zG" id="zmK-6m-fvJ"/>
                         <outlet property="recLabel" destination="CgG-oG-rX1" id="RKU-x1-5CZ"/>
                         <outlet property="recordButton" destination="eWY-Sk-Hze" id="47K-QU-B22"/>
                         <outlet property="stopButton" destination="WGo-TC-JLa" id="COw-Qr-CHX"/>
+                        <outlet property="stopLabel" destination="jwn-md-jaX" id="T5B-9r-QEj"/>
                         <segue destination="fGQ-Ks-Kmi" kind="show" identifier="stopRecording" id="dZV-bA-PSh"/>
                     </connections>
                 </viewController>
@@ -272,6 +327,7 @@
         <image name="darthButton" width="100" height="100"/>
         <image name="echoButton" width="80" height="80"/>
         <image name="fastPlaybackButton" width="100" height="100"/>
+        <image name="pauseButton" width="50" height="50"/>
         <image name="recordButton" width="100" height="100"/>
         <image name="reverbButton" width="80" height="80"/>
         <image name="slowPlaybackButton" width="100" height="100"/>

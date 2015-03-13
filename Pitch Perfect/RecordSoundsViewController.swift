@@ -17,6 +17,10 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var recLabel: UILabel!
+    @IBOutlet weak var pauseButton: UIButton!
+    @IBOutlet weak var stopLabel: UILabel!
+    @IBOutlet weak var pauseLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +29,9 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewWillAppear(animated: Bool) {
         // Make sure these UI elements appear every time
         stopButton.hidden = true
+        stopLabel.hidden = true
+        pauseButton.hidden = true
+        pauseLabel.hidden = true
         recordButton.enabled = true
         recLabel.text = "Tap to Record"
     }
@@ -36,8 +43,11 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
 
     @IBAction func recordAudio(sender: UIButton) {
         // Do Magic with buttons
-        recLabel.text = "recording..."
+        recLabel.text = "Recording..."
         stopButton.hidden = false
+        stopLabel.hidden = false
+        pauseButton.hidden = false
+        pauseLabel.hidden = false
         recordButton.enabled = false
         
         
@@ -73,6 +83,9 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
                     println("Unsuccessful recording")
                     recordButton.enabled = true
                     stopButton.hidden =  true
+                    stopLabel.hidden = true
+                    pauseButton.hidden = true
+                    pauseLabel.hidden = true
                 }
         }
     
@@ -83,6 +96,49 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             let data = sender as RecordedAudio
             PlaySoundsVC.receivedAudio = data
         }
+    }
+    
+    @IBAction func pauseRecording(sender: UIButton) {
+        // Do magic with buttons
+        recLabel.text = "Recording Paused"
+        stopButton.enabled = false
+        stopLabel.hidden = true
+        pauseButton.hidden = false
+        pauseLabel.text = "Release to Resume"
+        recordButton.enabled = true
+        audioRecorder.pause()
+    }
+    
+    @IBAction func resumeRecording(sender: UIButton) {
+        // Do Magic with buttons
+        recLabel.text = "Recording..."
+        stopButton.enabled = true
+        stopLabel.hidden = false
+        pauseButton.hidden = false
+        pauseLabel.text = "Hold to Pause"
+        recordButton.enabled = false
+        
+        
+        // Set up to Record Audio
+        let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        // Use current date and time to give the recorded sound an identity
+        let currentDateTime = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "ddMMyyyy-HHmmss"
+        let recordingName = formatter.stringFromDate(currentDateTime)+".wav"
+        let pathArray = [dirPath, recordingName]
+        let filePath = NSURL.fileURLWithPathComponents(pathArray)
+        println(filePath)
+        
+        // Create an Audio Play & Record session
+        var session = AVAudioSession.sharedInstance()
+        session.setCategory(AVAudioSessionCategoryPlayAndRecord, error: nil)
+        
+        // Record it!
+        audioRecorder = AVAudioRecorder(URL: filePath, settings: nil, error: nil)
+        audioRecorder.delegate = self
+        audioRecorder.meteringEnabled = true
+        audioRecorder.record()
     }
     
     @IBAction func stopRecording(sender: UIButton) {
