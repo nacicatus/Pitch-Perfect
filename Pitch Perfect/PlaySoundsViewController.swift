@@ -20,11 +20,11 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        // Get the audioPlayer to access the receivedAudio from user input
-        audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: nil)
+        audioPlayer = try? AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl)
         audioPlayer.enableRate = true
         // Initialize the audioEngine and the audioFile with the receivedAudio
         audioEngine = AVAudioEngine()
-        audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl, error: nil)
+        audioFile = try? AVAudioFile(forReading: receivedAudio.filePathUrl)
     }
 
     // Create a random float generator between a range of values
@@ -49,8 +49,8 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.reset()
         
         // create a random slow rate
-        var slowRate: Float = randomBetweenNumbers(0.0, secondNum: 1.0)
-        println(slowRate)
+        let slowRate: Float = randomBetweenNumbers(0.0, secondNum: 1.0)
+        print(slowRate)
         // Set the rate for slow playback
         audioPlayer.rate = slowRate
         audioPlayer.play()
@@ -63,8 +63,8 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.reset()
         
         // create a random fast rate
-        var fastRate = randomBetweenNumbers(1.0, secondNum: 2.0)
-        println(fastRate)
+        let fastRate = randomBetweenNumbers(1.0, secondNum: 2.0)
+        print(fastRate)
         // Set the rate for fast playback
         audioPlayer.rate = fastRate
         audioPlayer.play()
@@ -78,31 +78,31 @@ class PlaySoundsViewController: UIViewController {
     
     @IBAction func playChipmunkAudio(sender: UIButton) {
         //Chipmunk effect
-        var pitchMunk = randomBetweenNumbers(1.0, secondNum: 2400)
-        println(pitchMunk)
+        let pitchMunk = randomBetweenNumbers(1.0, secondNum: 2400)
+        print(pitchMunk)
         playAudioWithVariablePitch(pitchMunk) // Set a pitch value
     }
     
     @IBAction func playDarthAudio(sender: UIButton) {
         // Darth Vader Effect
-        var pitchVader = randomBetweenNumbers(-2400, secondNum: 1.0)
-        println(pitchVader)
+        let pitchVader = randomBetweenNumbers(-2400, secondNum: 1.0)
+        print(pitchVader)
         playAudioWithVariablePitch(pitchVader) // Set a pitch value
     }
     
     @IBAction func echoAudio(sender: UIButton) {
         // Randomize a wetDryMix value, and a delay value
-        var wDM = randomBetweenNumbers(0, secondNum: 100)
-        var dT = randomTimeInterval(0.0, secondNum: 2.0)
-        println(wDM)
-        println(dT)
+        let wDM = randomBetweenNumbers(0, secondNum: 100)
+        let dT = randomTimeInterval(0.0, secondNum: 2.0)
+        print(wDM)
+        print(dT)
         playEchoAudio(wDM, delay: dT)
     }
     
     @IBAction func reverbAudio(sender: UIButton) {
         // Randomize a wetDryMix value
-        var wDM2 = randomBetweenNumbers(0, secondNum: 100)
-        println(wDM2)
+        let wDM2 = randomBetweenNumbers(0, secondNum: 100)
+        print(wDM2)
         playReverbAudio(wDM2)
     }
     
@@ -113,11 +113,11 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.reset()
         
         // Create a player node
-        var audioPlayerNode = AVAudioPlayerNode()
+        let audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
         
         // get the pitch value from the IBAction function above and apply it to a new instance of AVAudioTimePitch
-        var changePitchEffect = AVAudioUnitTimePitch()
+        let changePitchEffect = AVAudioUnitTimePitch()
         changePitchEffect.pitch = pitch
         
         //attach said node to the audioEngine
@@ -129,7 +129,10 @@ class PlaySoundsViewController: UIViewController {
         
         // get the player node to access the audioFile
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
-        audioEngine.startAndReturnError(nil)
+        do {
+            try audioEngine.start()
+        } catch _ {
+        }
         
         // Play it!
         audioPlayerNode.play()
@@ -143,11 +146,11 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.reset()
         
         // create a Reverberate node
-        var audioReverbNode = AVAudioPlayerNode()
+        let audioReverbNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioReverbNode)
         
         // get the wetDryMix value from the IBAction above and attach it to a new instance of AVAudioUnitReverb; attach that node to engine
-        var makeReverbEffect = AVAudioUnitReverb()
+        let makeReverbEffect = AVAudioUnitReverb()
         makeReverbEffect.wetDryMix = reverberate
         audioEngine.attachNode(makeReverbEffect)
         
@@ -157,7 +160,11 @@ class PlaySoundsViewController: UIViewController {
         
        // get the reverb node to access the audioFile
         audioReverbNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
-        audioEngine.startAndReturnError(nil)
+        
+       do {
+           try audioEngine.start()
+       } catch _ {
+       }
         
         // Play it!
         audioReverbNode.play()
@@ -170,22 +177,26 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.reset()
         
         // create an Echo Node and attach it to the audioEngine
-        var audioEchoEffectNode = AVAudioPlayerNode()
+        let audioEchoEffectNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioEchoEffectNode)
         
         // get the values for wetDryMix and delayTime from IBAction above and set them; attach node to engine
-        var makeEchoEffect = AVAudioUnitDelay()
+        let makeEchoEffect = AVAudioUnitDelay()
         makeEchoEffect.delayTime = delay
         makeEchoEffect.wetDryMix = reverbEcho
         audioEngine.attachNode(makeEchoEffect)
         
-        // Connect all nodes within enginge
+        // Connect all nodes within engine
         audioEngine.connect(audioEchoEffectNode, to: makeEchoEffect, format: nil)
         audioEngine.connect(makeEchoEffect, to: audioEngine.outputNode, format: nil)
         
         // get the Echo Node to access the audioFile
         audioEchoEffectNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
-        audioEngine.startAndReturnError(nil)
+       
+        do {
+            try audioEngine.start()
+        } catch _ {
+        }
         
         //Play it!
         audioEchoEffectNode.play()
